@@ -31,7 +31,6 @@ app.get('/books/create', (req, res) => {
 
 app.post('/books/create', (req, res) => {
     const {name, price, status, author} = req.body;
-    console.log(req.body);
     const sqlInsert = "INSERT INTO books (name, price, status, author) VALUES ?";
     const value = [
         [name, price, status, author]
@@ -54,6 +53,27 @@ app.get('/books/:id/delete', (req, res) => {
     const idBook = req.params.id;
     const sql = `DELETE FROM books WHERE id = ${idBook}`;
     connection.query(sql, (err, result) => {
+        if (err) throw err;
+        res.redirect('/index');
+    });
+});
+
+app.get('/books/:id/update', (req, res) => {
+    const idBook = req.params.id;
+    const sql = `SELECT * FROM books WHERE id = ${idBook}`;
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+        console.log(result)
+        res.render('update', {book: result[0]});
+    });
+});
+
+app.post('/books/:id/update', (req, res) => {
+    const idBook = req.params.id;
+    const sql = `UPDATE books SET name = ?, price = ?, author = ?, status = ? WHERE id = ?`;
+    const {name, price, author, status} = req.body;
+    const value = [name, price, author, status, idBook];
+    connection.query(sql, value, (err, result) => {
         if (err) throw err;
         res.redirect('/index');
     });

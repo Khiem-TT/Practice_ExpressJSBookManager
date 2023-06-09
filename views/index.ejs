@@ -72,8 +72,11 @@
                         <td>
                             <%= book.status %>
                         </td>
-                        <td><a onclick="return confirm('Are you sure you want to delete this book?')"
-                               href="/books/<%= book.id %>/delete" class="btn btn-danger">Delete</a></td>
+                        <td>
+                            <a onclick="return confirm('Are you sure you want to delete this book?')"
+                               href="/books/<%= book.id %>/delete" class="btn btn-danger">Delete</a>
+                            <a href="/books/<%= book.id %>/update" class="btn btn-primary">Update</a>
+                        </td>
                     </tr>
                 <% }) %>
             </table>
