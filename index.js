@@ -50,6 +50,15 @@ app.get('/index', (req, res) => {
     });
 });
 
+app.get('/books/:id/delete', (req, res) => {
+    const idBook = req.params.id;
+    const sql = `DELETE FROM books WHERE id = ${idBook}`;
+    connection.query(sql, (err, result) => {
+        if (err) throw err;
+        res.redirect('/index');
+    });
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
